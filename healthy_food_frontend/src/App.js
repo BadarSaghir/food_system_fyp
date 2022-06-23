@@ -10,6 +10,7 @@ import Dashboard from './Components/pages/Dashboard';
 import Home from './Components/pages/Home';
 import ProductPage from './Components/pages/ProductPage';
 import AddProduct from './Components/pages/AddProduct';
+import EditMenu from './Components/pages/EditMenu';
 import PageLayout from './Components/pages/PageLayout';
 import OrderPlace from './Components/pages/customer/OrderPlace';
 import Cart from './Components/pages/customer/Cart';
@@ -133,6 +134,11 @@ function App() {
             <Route exact path="/menu" element={
               <PageLayout >
                 <ProtectedRoute component={Menu}/>
+              </PageLayout>
+            } />
+             <Route exact path="/editMenu" element={
+              <PageLayout >
+                <ProtectedRoute component={EditMenu}/>
               </PageLayout>
             } />
             <Route exact path="/product/:id" element={<ProductPage cart={cart} handleAddItemToCart={addItemToCart} />} />

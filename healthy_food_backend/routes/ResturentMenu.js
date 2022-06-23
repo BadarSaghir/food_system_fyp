@@ -27,6 +27,31 @@ router.get('/', auth, async (req, res) => {
     res.send(menu);
 });
 
+
+router.delete('/:id', auth, async (req, res) => {
+    console.log(req.params.id)
+    try {
+       
+       
+
+        // RegisterCourse.deleteMany({ course_id: req.params.id }).then((d) => {
+        //     console.log(d.deletedCount);
+        // });
+        await Menu.findByIdAndRemove(req.params.id);
+        // res.status(200).json({ msg: 'Course removed' });
+        const menu = await Menu
+        .find()
+        .sort('date');
+    res.status(200).send(menu);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+
+});
+
+
 // Schema Validation 
 const MenuValidationSchema = Joi.object({
     title: Joi.string()

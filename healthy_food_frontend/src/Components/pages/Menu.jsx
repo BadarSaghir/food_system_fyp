@@ -1,8 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 function Menu() {
     const [menuItems, setMenuItems] = useState([])
+    let navigate = useNavigate();
+    const editMenu=(e,item)=>{
+        navigate('/editMenu',{state:item})
+
+    }
+
+    
+    const deleteMenu = (e,item)=>{
+        
+        const config = {
+            headers: {
+                'x-auth-token': sessionStorage.getItem('token'),
+            }
+        }
+        axios.delete(`api/menuresturent/${item._id}`, config).then((res) => {  
+            setMenuItems(res.data)
+        }).catch(err => {
+        })
+    
+    }
+
     useEffect(() => {
         const config = {
             headers: {
@@ -34,7 +57,12 @@ function Menu() {
                                                 <div className="card-body p-4 pb-0">
                                                     <div className="text-left">
                                                         <h5>{item.title}</h5>
-                                                        <p className="fw-bolder">{item.subTitle}</p>
+                                                        <div className="d-flex justify-content-between">
+                                                            <p className="price">{item.subTitle}</p>
+                                                            <p className="price"><button onClick={(e)=>{editMenu(e,item)}}>Edit</button></p>
+                                                            <p className="price"><button onClick={(e)=>{deleteMenu(e,item)}}>Delete</button></p>
+                                                        </div>
+                                                       
                                                         <div className="d-flex justify-content-between">
                                                             <p className="price">{item.Quantity} <span> {item.Unit}</span></p>
                                                             <p className="price">{item.price} <span> {item.currency}</span></p>
