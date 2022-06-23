@@ -17,6 +17,7 @@ app.use('/api/menu', require('./routes/Menu'));
 app.use('/api/menuresturent', require('./routes/ResturentMenu'));
 app.use('/api/order', require('./routes/Order'));
 app.use('/api/orderresturent', require('./routes/OrderResturent'));
+app.use('/api/favorite', require('./routes/Favourite'));
 
 if (process.env.NODE_ENV === 'production') {
     // set static folder

@@ -16,13 +16,15 @@
   },
   "author": "awais",
   "license": "ISC",
-  "dependencies": { 
+  "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@hapi/joi": "^17.1.1",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.1",
     "express": "^4.17.1",
     "firebase": "^9.6.9",
     "firebase-admin": "^10.0.2",
+    "font-awesome": "^4.7.0",
     "joi-objectid": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.26",

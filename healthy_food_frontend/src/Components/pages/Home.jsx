@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../UIComponents/Userui/Header";
 import {useState} from 'react';
-
-
-
+import axios from "axios";
+import {FavoriteBorderIcon,FavoriteIcon} from '@mui/icons-material';
+// import  from '@mui/icons-material';
 
 function Home({
   menuItems,
@@ -13,12 +13,29 @@ function Home({
   handleRemoveItemFromCart,
 }) {
     const [cartItems, setCartItems] = useState('All');
+    const [isFav,setIsFav ] = useState([])
     const filterCategory = (categitem)=>{
         setCartItems(categitem);
+
     }
-   
+  
 
+useEffect(()=>{
+  const config = {
+    headers: {
+      "x-auth-token": sessionStorage.getItem("token"),
+    },
+  };
+ 
+  
+setIsFav( menuItems.map(async(item)=>{
+  const res = await axios.get(`api/favorite/${item._id}`, config)
+  return res.data
 
+}))
+console.log(isFav)
+
+},[])
   return (
     <div>
       <Header cart={cart} handleRemoveItemFromCart={handleRemoveItemFromCart} />
@@ -57,7 +74,7 @@ function Home({
             className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 
                     row-cols-xl-3 justify-content-start"
           >
-            {menuItems.map((item) => {
+            {menuItems.map((item,idx) => {
               return (
                   cartItems === item.category || cartItems==='All'?
                   <div key={item._id} className="col mb-5">
@@ -83,6 +100,8 @@ function Home({
                         {/* <p className="fw-bolder">{item.subTitle}  </p> */}
                         <div className="">
                           <p className="price">{item.description}</p>
+                        <button>{isFav[idx]?<FavoriteBorderIcon />:<FavoriteIcon/>}</button>
+                          {item}
                           <div class="d-flex justify-content-between">
                             <div>
                               <p className="price">

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { number } = require('@hapi/joi');
 
-const MenuSchema = mongoose.Schema({
+const favouriteSchema = mongoose.Schema({
     
     // act as a forign key
     user_id: {
@@ -18,4 +18,4 @@ const MenuSchema = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Menu', MenuSchema);
+module.exports = mongoose.model('Favourite',  favouriteSchema);
