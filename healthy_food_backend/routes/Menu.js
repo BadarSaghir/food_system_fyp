@@ -140,10 +140,6 @@ router.delete('/:id', auth, async (req, res) => {
         // });
         await Course.findByIdAndRemove(req.params.id);
         res.status(200).json({ msg: 'Course removed' });
-        const menu = await Menu
-        .find()
-        .sort('date');
-    res.status(200).send(menu);
 
     } catch (err) {
         console.error(err.message);

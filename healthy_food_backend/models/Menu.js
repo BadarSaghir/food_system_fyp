@@ -39,6 +39,7 @@ const MenuSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    
     Status: {
         type: Number,
         // 1 Instock 0 Outof stock
@@ -49,6 +50,7 @@ const MenuSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }]
+
 
 
 });
