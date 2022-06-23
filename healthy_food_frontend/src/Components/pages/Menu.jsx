@@ -3,13 +3,16 @@ import axios from 'axios';
 
 function Menu() {
     const [menuItems, setMenuItems] = useState([])
-    const removeMenu=(e,id)=>{
-        onst config = {
+    const removeMenu = (e,item)=>{
+      
+    console.log(e,item)
+    const config = {
             headers: {
                 'x-auth-token': sessionStorage.getItem('token'),
             }
         }
-        axios.delete(`api/menuresturent/${id}`, config).then((res) => {  
+        axios.delete(`api/menuresturent/${item._id}/`, config).then((res) => {
+            console.log(res.data)  
             setMenuItems(res.data)
         }).catch(err => {
         })
@@ -48,8 +51,8 @@ function Menu() {
                                                         <h5>{item.title}</h5>
                                                         <p className="fw-bolder">{item.subTitle}</p>
                                                         <div className="d-flex justify-content-between">
+                                                            <p className="price"><button onClick={(e)=>{ removeMenu(e,item)}}>Remove</button></p>
                                                             <p className="price"><button>Edit</button></p>
-                                                            <p className="price"><button onClick={(e)=>removeMenu(e,item._id)}>Remove</button></p>
                                                         </div>
                                                         <div className="d-flex justify-content-between">
                                                             <p className="price">{item.Quantity} <span> {item.Unit}</span></p>

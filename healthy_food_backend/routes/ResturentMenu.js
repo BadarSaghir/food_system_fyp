@@ -7,6 +7,8 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 var mongoose = require('mongoose');
+const Products = require('../models/Products');
+
 
 
 const router = express.Router();
@@ -19,7 +21,7 @@ const router = express.Router();
 
 router.get('/', auth, async (req, res) => {
     console.log(req.user.id)
-    const menu = await Menu.find({ user_id: req.user.id });
+    const menu = await Products.find({ user_id: req.user.id });
     if (!menu) {
         res.status(404).send('Ooops required item is not existing in the server');
         return;
@@ -27,6 +29,18 @@ router.get('/', auth, async (req, res) => {
     res.send(menu);
 });
 
+
+router.delete('/:id', auth, async(req, res) => {
+    
+   try {
+    
+       await Products.findOneAndDelete({_id:req.params.id})
+       const menu = await Products.find({user_id:req.user.id})
+       res.send(menu)
+   } catch (error) {
+    res.status(500).send({error})
+   }
+},);
 // Schema Validation 
 const MenuValidationSchema = Joi.object({
     title: Joi.string()

@@ -7,6 +7,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 var mongoose = require('mongoose');
+const Products = require('../models/Products');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const uploadPath = path.resolve();
@@ -30,13 +31,13 @@ const router = express.Router();
  * @access Private
  */
 router.get('/', async (req, res) => {
-    const menu = await Menu
+    const menu = await Products
         .find()
         .sort('date');
     res.send(menu);
 });
 router.get('/:id', async (req, res) => {
-    const menuItem = await Menu
+    const menuItem = await Products
         .findById(req.params.id)
     res.send(menuItem);
 });
@@ -73,8 +74,23 @@ router.post('/', auth, upload.single('file'), async (req, res) => {
             ImagePlaceholder: req.file.filename ? req.file.filename : 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg',
             user_id: req.user.id
         })
-        await menu.save();
-        res.status(200).send(menu);
+        await menu.save(async (err,menn)=>{
+            product = new Products({
+                _id:menn._id,
+                title,
+                subTitle,
+                description,
+                price,
+                Quantity,
+                Unit,
+                category,
+                ImagePlaceholder: req.file.filename ? req.file.filename : 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg',
+                user_id: req.user.id
+            })
+            await product.save()      
+        }
+        );
+        res.status(200).send(product);
     }
     catch (error) {
         console.log(error)
@@ -101,14 +117,14 @@ router.put('/:id', auth, async (req, res) => {
     console.log(req.param.id)
     try {
 
-        let course = await Course.findById(req.params.id);
+        let course = await Products.findById(req.params.id);
         if (!course) return res.status(404).json({ msg: 'Course not found' });
 
         // Make sure user owns contact
         if (course.educator_id.toString() !== req.user.id)
             return res.status(401).json({ msg: 'Not authorized' });
 
-        course = await Course.findByIdAndUpdate(
+        course = await Products.findByIdAndUpdate(
             req.params.id,
             { $set: updatedCourse },
             { new: true }
@@ -129,8 +145,9 @@ router.put('/:id', auth, async (req, res) => {
  */
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const course = await Course.findById(req.params.id);
-        if (!course) return res.status(404).json({ msg: 'Course with this id does not exists' });
+        const course = await Products.findById(req.params.id);
+        const products = await Products.find()
+        if (!course) return res.status(404).json(products);
         // Make sure user owns course
         if (course.educator_id.toString() !== req.user.id)
             return res.status(401).json({ msg: 'Not authorized' });
@@ -138,8 +155,8 @@ router.delete('/:id', auth, async (req, res) => {
         // RegisterCourse.deleteMany({ course_id: req.params.id }).then((d) => {
         //     console.log(d.deletedCount);
         // });
-        await Course.findByIdAndRemove(req.params.id);
-        res.status(200).json({ msg: 'Course removed' });
+        await Products.findByIdAndRemove(req.params.id);
+        res.status(200).json(products);
 
     } catch (err) {
         console.error(err.message);

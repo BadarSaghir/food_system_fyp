@@ -12,6 +12,7 @@ function AddProduct() {
             setPreview(undefined)
             return
         }
+        console.log(selectedFile)
 
         const objectUrl = URL.createObjectURL(selectedFile)
         setPreview(objectUrl)
