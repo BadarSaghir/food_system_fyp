@@ -3,7 +3,8 @@ import axios from 'axios';
 
 function Menu() {
     const [menuItems, setMenuItems] = useState([])
-    const removeMenu = (e,item)=>{
+
+    const removeMenu = async(e,item)=>{
       
     console.log(e,item)
     const config = {
@@ -11,11 +12,8 @@ function Menu() {
                 'x-auth-token': sessionStorage.getItem('token'),
             }
         }
-        axios.delete(`api/menuresturent/${item._id}/`, config).then((res) => {
-            console.log(res.data)  
-            setMenuItems(res.data)
-        }).catch(err => {
-        })
+        const res= await axios.delete(`api/menuresturent/${item._id}/`, config)
+        setMenuItems(res.data)
 
     }
     useEffect(() => {
