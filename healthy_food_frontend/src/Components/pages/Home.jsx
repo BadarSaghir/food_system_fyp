@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../UIComponents/Userui/Header";
 import {useState} from 'react';
-
-
+import axios from "axios";
+import {useCookies} from "react-cookie"
 
 
 function Home({
@@ -16,8 +16,24 @@ function Home({
     const filterCategory = (categitem)=>{
         setCartItems(categitem);
     }
+    
+    const [fav, setFav] = useState([])
+    const [cookies, setCookie, removeCookie] = useCookies([]);
+
    
 
+useEffect(()=>{
+  const config = {
+    headers: {
+        'x-auth-token': sessionStorage.getItem('token'),
+    }
+}
+  axios.post(`/api/favorite`,config).then((res)=>setFav(res.data)).catch()
+
+  console.log(fav)
+// console.log(cookies)
+
+},[])
 
   return (
     <div>
@@ -86,7 +102,15 @@ function Home({
                           <p className="price">{item.description}</p>
                          
                           <div class="d-flex justify-content-between">
-                          {/* <p className="price">{item.description}:Heart Here</p> */}
+                            
+                        {/* <button onClick={
+                          cookies[`${item._id}`]?setCookie(`${item._id}`,false,{path:'/'}):setCookie(`${item._id}`,true,{path:'/'})
+                          
+                          }>
+                          {
+                          sessionStorage.getItem('token')?(cookies[`${item._id}`]?'Heart Here':'No Heart here'):<p></p>
+                          }
+                          </button> */}
                             <div>
                               <p className="price">
                                 {item.Quantity} / <span> {item.Unit}</span>

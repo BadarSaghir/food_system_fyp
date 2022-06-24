@@ -13,21 +13,20 @@ const router = express.Router();
 
 
 router.get('/', auth, async (req, res) => {
+    
 try{
     const user=await User.find({_id:req.user.id})
+    console.log(user)
     console.log(user.fav)
     res.send({is_fav:user.fav})
 }catch{
-    res.send({is_fav:false})
+    res.send({is_fav:[]})
 }
     
 });
 
 router.post('/:id', auth, async (req, res) => {
 
-
-
-    
     
 });
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-
+import './display.css'
 export default function Header({ cart, handleRemoveItemFromCart }) {
     let navigate = useNavigate();
 
@@ -22,8 +22,8 @@ export default function Header({ cart, handleRemoveItemFromCart }) {
             <div className=" d-flex justify-content-between" style={{
                 width: '100%'
             }} >
-                <Link className="navbar-brand" to="#!">Eat Healthy Food</Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <Link className="navbar-brand display" to="#!">Eat Healthy Food</Link>
+                <button className="navbar-toggler display" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
                 <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
 

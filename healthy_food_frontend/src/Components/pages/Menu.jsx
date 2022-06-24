@@ -46,15 +46,18 @@ function Menu() {
                                                 <img className="card-img-top" src={`/api/uploads/${item.ImagePlaceholder[0]}`} width="100%" height="200" alt="..." />
                                                 <div className="card-body p-4 pb-0">
                                                     <div className="text-left">
+
                                                         <h5>{item.title}</h5>
+                                                       
                                                         <p className="fw-bolder">{item.subTitle}</p>
                                                         <div className="d-flex justify-content-between">
-                                                            <p className="price"><button onClick={(e)=>{ removeMenu(e,item)}}>Remove</button></p>
-                                                            <p className="price"><button>Edit</button></p>
+                                                           
+                                                          
                                                         </div>
                                                         <div className="d-flex justify-content-between">
                                                             <p className="price">{item.Quantity} <span> {item.Unit}</span></p>
                                                             <p className="price">{item.price} <span> {item.currency}</span></p>
+                                                            <p className="price"><button onClick={(e)=>{ removeMenu(e,item)}}>Remove</button></p>
                                                         </div>
 
                                                     </div>
