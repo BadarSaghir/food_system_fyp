@@ -74,6 +74,7 @@ function App() {
     let total = 0;
     cart.map((item) => {
       total += item.item.price * item.quantity;
+      return total
     });
     return total;
   };

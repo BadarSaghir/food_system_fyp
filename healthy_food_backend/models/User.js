@@ -20,6 +20,10 @@ const userSchema = mongoose.Schema({
         required: true
     },
     fav:{
+        type:Array,
+        required:false,
+        unique:true,
+        default:[]
 
     },
     role: {

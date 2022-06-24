@@ -149,4 +149,5 @@ const updateeducatorRequestbody = Joi.object({
     imageAvatar: Joi.string()
 });
 
+
 module.exports = router;

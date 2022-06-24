@@ -5,22 +5,18 @@ const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
 const auth = require('../middlewares/auth');
 const Favourite = require('../models/Favourite');
+const User = require('../models/User');
 
 
 
 const router = express.Router();
 
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
 try{
-    const id=req.params.id
-    const uid = req.user.id
-    is_fav = await Favourite.exists({
-        user_id:uid,
-        product_id:pid
-
-    })
-    res.send({is_fav:is_fav})
+    const user=await User.find({_id:req.user.id})
+    console.log(user.fav)
+    res.send({is_fav:user.fav})
 }catch{
     res.send({is_fav:false})
 }
@@ -29,27 +25,7 @@ try{
 
 router.post('/:id', auth, async (req, res) => {
 
-    const id=req.params.id
-    const uid = req.user.id
-    is_fav = await Favourite.exists({
-        user_id:uid,
-        product_id:pid
 
-    })
-    if(is_fav){
-
-    Favourite.remove({
-            user_id:uid,
-            product_id:pid
-    }).exec()
-    res.send({is_fav:false})
-}else{
-    fav=Favourite({
-        user_id:uid,
-        product_id:pid
-    })
-    res.send({is_fav:true})
-}
 
     
     

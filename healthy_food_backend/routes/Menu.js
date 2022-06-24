@@ -36,6 +36,8 @@ router.get('/', async (req, res) => {
         .sort('date');
     res.send(menu);
 });
+
+
 router.get('/:id', async (req, res) => {
     const menuItem = await Products
         .findById(req.params.id)
@@ -87,10 +89,11 @@ router.post('/', auth, upload.single('file'), async (req, res) => {
                 ImagePlaceholder: req.file.filename ? req.file.filename : 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg',
                 user_id: req.user.id
             })
-            await product.save()      
+            await product.save()
+            res.status(200).send(product);      
         }
         );
-        res.status(200).send(product);
+        
     }
     catch (error) {
         console.log(error)
